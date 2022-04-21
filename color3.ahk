@@ -28,10 +28,10 @@ Get_Color:
 				Gui, Color, %Our_Color%
 				If Our_Color=0xFFFFFF, {
 				
- 					send, {RButton down}
+ 					send, {LButton down}
 				}
 				else, {
-					send, {RButton up}
+					send, {LButton up}
 					
 				}
 			}
