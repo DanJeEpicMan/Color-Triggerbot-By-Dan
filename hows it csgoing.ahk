@@ -4,14 +4,16 @@
 CoordMode, Pixel, Screen ; This sets all color related code to be related to screen
 CoordMode, Mouse, Screen ; This sets all Mouse related code to be related to screen
 
-Gui, Add, Text, x5 y+3, Close this tab to stop the hack, if minimised it will still run ; adds text to the gui
-Gui, Add, Text, x5 y+3, Hold NumPad9 to use the trigger-bot ; adds text to the gui
-Gui, Add, Text, x5 y35, Press Ctrl+F3 to start ESP its not too good but its ok ; adds text to the gui
-Gui, Add, Button, x2 y100 w280 h25 gGet_Color , Start ; adds button to gui
-Gui, Add, Button, x180 y17 w100 h17 ghel , Help ; adds the help button to gui
+Gui, Add, Text, x9 y+3, Close this tab to stop the hack, if minimised it will still run ; adds text to the gui
+Gui, Add, Text, x9 y+3, Click 'Start Triggerbot' then, hold 0 to use in game ; adds text to the gui
+Gui, Add, Text, x9 y+3, If gui red then triggerbot active ; adds text to the gui
+Gui, Add, Button, x9 y+5 w280 h25 gESP , Start ESP ; adds button to gui
+Gui, Add, Button, x9 y+5 w138 h25 gGet_Color , Start Triggerbot ; adds button to gui
+Gui, Add, Button, x150 y83 w138 h25 gStop_Get_Color , Stop Triggerbot ; adds button to gui
+Gui, Add, Button, x9 y+5 w280 h25 ghel , Help ; adds the help button to gui
 
 
-Gui, Show, w310 h130, DanJeCoderMan's Hack ; gui size
+Gui, Show, , PixelGetColor ; gui size, w500 h300
 return
 
 
@@ -19,11 +21,16 @@ GuiClose: ; makes it so that when the tab is closed the script ends
 	ExitApp
 
 hel: ; this is the help function 
-	Msgbox, Vidio to help you (yt-vid) ; dysplays box 
+	Msgbox, Github to help you (https://github.com/DanJeEpicMan/Color-Triggerbot-By-Dan) ; dysplays box 
+return 
+
+Random, rad , 80, 190 
 
 Get_Color: ; function related to the button
+	funk := 0
 	Loop ; loops when button is pressed
 		{
+		Gui, Color, 0xFF6060
 		Left_Mouse := GetKeyState("0") ; Left_Mouse is a variable and the button to activae the trigger is NumPad9 witch can be changed
 		Right_Mouse := GetKeyState("NumPad0") ;Right_Mouse is a variable and the button to stop and is bound to NumPad0
 		if(Left_Mouse==True) ; checks if Left_Mouse is true and theirfor if NumPad9 is pressed
@@ -31,19 +38,29 @@ Get_Color: ; function related to the button
 			PixelSearch, Px, Py, 1278, 751, 1288, 741, 0x20FFFF, 32, Fast RGB ; !!!!( this provides an explonation)change the numbers to fit the screen,  Px and Py are variables where the colors are located, the numbesr are where it checks, the 0x... is the color, 20 how far off the color can be (look up RGB for more info, Fast is the way it scans, RGB is the color method
 				if not ErrorLevel ; check is the color was not found
 				{
-					sleep, 100
-					MouseClick, Left
+    				MouseClick, Left
+					sleep, rad
+				
 				}
 				
 		}
 		if(Right_Mouse==True) ; checks if NumPad0 is pressed
 			break ; stops the script
+
+		if(funk==1) ; checks for Stop_Get_Color
+			Break
+
 		}
 	return ; runs loop again
 
+Stop_Get_Color:
+Gui, Color, 0xFFFFFF
+funk := 1
+return
+
 ; =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-Senction 2-ESP=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-F3:: ;I HAVE NO IDEA HOW THIS FUNCTION WORKS I JUST PASTED IT
+ESP: ;I HAVE NO IDEA HOW THIS FUNCTION WORKS I JUST PASTED IT
 
 _Switch := !_Switch 
 
